@@ -9,35 +9,35 @@ path=$S3_BUCKET_PATH
 stamp=`date +"%s_%d-%m-%Y_%H%M"`
 
 # List all the databases
-# databases=`mysql -u $DB_USER -p$DB_PASSWORD -e "SHOW DATABASES;" | tr -d "| " | grep -v "\(Database\|information_schema\|performance_schema\|mysql\|test\)"`
+databases=`mysql -u $DB_USER -p$DB_PASSWORD -h $DB_CONTAINER -e "SHOW DATABASES;" | tr -d "| " | grep -v "\(Database\|information_schema\|performance_schema\|mysql\|test\)"`
 
 # Feedback
 echo -e "Dumping to \e[1;32m$bucket/$stamp/\e[00m"
 
 # Loop the databases ###########################################################
-# for db in $databases; do
+for db in $databases; do
 
-#   # Define our filenames
-#   filename="$stamp-$db.sql.gz"
-#   tmpfile="/tmp/$filename"
-#   destination="$bucket/$path/$filename"
+  # Define our filenames
+  filename="$stamp-$db.sql.gz"
+  tmpfile="/tmp/$filename"
+  destination="$bucket/$path/$filename"
 
-#   # Feedback
-#   echo -e "\e[1;34m$db\e[00m"
+  # Feedback
+  echo -e "\e[1;34m$db\e[00m"
 
-#   # Dump and zip
-#   echo -e "\e[0;35mCreating $tmpfile\e[00m"
-#   mysqldump -u $DB_USER -p$DB_PASSWORD --force --opt --databases "$db" | gzip -c > "$tmpfile"
+  # Dump and zip
+  echo -e "\e[0;35mCreating $tmpfile\e[00m"
+  mysqldump -u $DB_USER -p$DB_PASSWORD -h $DB_CONTAINER --force --opt --databases "$db" | gzip -c > "$tmpfile"
 
-#   # Upload
-#   echo -e "\e[0;35m✩ uploading $i\e[00m"
-#   aws s3 cp $tmpfile $destination
+  # Upload
+  echo -e "\e[0;35m✩ uploading $i\e[00m"
+  aws s3 cp $tmpfile $destination
 
-#   # Delete
-#   echo -e "\e[0;35mDeleting temporary file: $tmpfile\e[00m"
-#   rm -f "$tmpfile"
+  # Delete
+  echo -e "\e[0;35mDeleting temporary file: $tmpfile\e[00m"
+  rm -f "$tmpfile"
 
-# done;
+done;
 
 # Loop the backup folders ######################################################
 for folder in ${!FOLDER_*}; do
