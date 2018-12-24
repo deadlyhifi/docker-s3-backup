@@ -9,7 +9,7 @@ version: '3'
 
 services:
   backup:
-    image: docker-s3-backup
+    image: deadlyhifi/docker-s3-backup
     environment:
       - AWS_ACCESS_KEY_ID=YOURACCESSKEY
       - AWS_SECRET_ACCESS_KEY=YOURSECRETACCESKEY
@@ -63,3 +63,4 @@ Note - `--single-transaction` is given which should only be used on InnoDB table
 
 1.0 - It works!
 1.1 - Pressume InnoDB
+1.1.1 - Correct docker-compose example
