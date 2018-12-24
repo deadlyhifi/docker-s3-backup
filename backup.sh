@@ -27,7 +27,7 @@ for db in $databases; do
 
   # Dump and zip
   echo -e "\e[0;35mCreating $tmpfile\e[00m"
-  mysqldump -u $DB_USER -p$DB_PASSWORD -h $DB_CONTAINER --force --opt --databases "$db" | gzip -c > "$tmpfile"
+  mysqldump -u $DB_USER -p$DB_PASSWORD -h $DB_CONTAINER --force --single-transaction --databases "$db" | gzip -c > "$tmpfile"
 
   # Upload
   echo -e "\e[0;35m✩ uploading $i\e[00m"

@@ -44,6 +44,8 @@ All your databases will be backed up, except the defaults created by MySQL/Maria
 
 `DB_CONTAINER` is the name of the database container as you name it in your `docker-compose` file. e.g. `db`
 
+Note - `--single-transaction` is given which should only be used on InnoDB tables. ([details](https://dba.stackexchange.com/questions/87100/what-are-the-optimal-mysqldump-settings)).
+
 # Info
 
 - `0 * * * *` in `CRON_SCHEDULE` is every hour. Look at [Cron times](https://crontab.guru/) on how to set different schedules.
@@ -56,3 +58,8 @@ All your databases will be backed up, except the defaults created by MySQL/Maria
 - https://github.com/peterrus/docker-s3-cron-backup
 - https://github.com/MorbZ/docker-cron
 - https://stackoverflow.com/questions/37015624/how-to-run-a-cron-job-inside-a-docker-container
+
+# Releases
+
+1.0 - It works!
+1.1 - Pressume InnoDB
